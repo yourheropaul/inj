@@ -1,0 +1,32 @@
+package inj
+
+import "reflect"
+
+func (g *Graph) Provide(inputs ...interface{}) error {
+
+	for _, input := range inputs {
+
+		// Get reflection types
+		mtype, stype := getReflectionTypes(input)
+
+		// Assign a node in the graph
+		n := g.add(mtype)
+
+		// Populate the new node
+		n.Object = input
+		n.Type = mtype
+		n.Value = reflect.ValueOf(input)
+		n.Name = identifier(stype)
+
+		// For structs, find depdendencies
+		if stype.Kind() == reflect.Struct {
+			var basePath = EmptyStructPath()
+			findDepdendencies(stype, &n.Dependencies, &basePath)
+		}
+	}
+
+	// Plug everything together
+	g.connect()
+
+	return nil
+}
