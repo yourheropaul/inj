@@ -2,12 +2,16 @@ package inj
 
 import "reflect"
 
+// A Graph object represents an flat tree of application
+// dependencies, a count of currently unmet dependencies,
+// and a list of encountered errors.
 type Graph struct {
 	Nodes              nodeMap
 	UnmetDepdendencies int
 	Errors             []string
 }
 
+// Create a new instance of a graph with allocated memory
 func NewGraph() (g *Graph) {
 
 	g = &Graph{}
@@ -18,6 +22,7 @@ func NewGraph() (g *Graph) {
 	return
 }
 
+// Add a node by reflection type
 func (g *Graph) add(typ reflect.Type) (n *GraphNode) {
 
 	n = NewGraphNode()

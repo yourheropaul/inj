@@ -22,6 +22,28 @@ func Test_AssertionHappyPath(t *testing.T) {
 	}
 }
 
+func Test_AssertionComplexHappyPath(t *testing.T) {
+
+	g, c := NewGraph(), ConcreteType{}
+
+	// Register providers (can include non-providers, which will then be wired up)
+	if err := g.Provide(
+		&c,
+		&helloSayer{},
+		&goodbyeSayer{},
+		funcInstance,
+		ichannel,
+		DEFAULT_STRING,
+	); err != nil {
+		t.Fatalf("Graph.Provide: %s", err)
+	}
+
+	if v, m := g.Assert(); !v {
+		fmt.Println(m)
+		t.Error("Assert() failed")
+	}
+}
+
 func Test_AssertionSadPath(t *testing.T) {
 
 	g := NewGraph()
