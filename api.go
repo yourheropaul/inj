@@ -10,7 +10,7 @@ package inj
 type Grapher interface {
 	Provide(inputs ...interface{}) error
 	Inject(fn interface{}, args ...interface{})
-	// Assert
+	Assert() (valid bool, errors []string)
 }
 
 //////////////////////////////////////////////
@@ -45,4 +45,11 @@ func Provide(inputs ...interface{}) error {
 // for the sake of utility.
 func Inject(fn interface{}, args ...interface{}) {
 	graph.Inject(fn, args...)
+}
+
+// Make sure that all provided dependencies have their
+// requirements met, and return a list of errors if they
+// don't.
+func Assert() (valid bool, errors []string) {
+	return graph.Assert()
 }
