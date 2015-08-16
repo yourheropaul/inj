@@ -1,3 +1,5 @@
+// +build !noglobals
+
 package inj
 
 //////////////////////////////////////////////
@@ -7,7 +9,7 @@ package inj
 // A Grapher is anything that can represent an application graph
 type Grapher interface {
 	Provide(inputs ...interface{}) error
-	// Inject
+	Inject(fn interface{}, args ...interface{})
 	// Assert
 }
 
@@ -36,4 +38,11 @@ func SetGrapher(g Grapher) {
 // application graph
 func Provide(inputs ...interface{}) error {
 	return graph.Provide(inputs...)
+}
+
+// Given a function, call it with arguments assigned
+// from the graph. Additional arguments can be provided
+// for the sake of utility.
+func Inject(fn interface{}, args ...interface{}) {
+	graph.Inject(fn, args...)
 }
