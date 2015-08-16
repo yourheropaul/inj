@@ -15,13 +15,6 @@ func Test_Injection(t *testing.T) {
 		t.Fatalf("Graph.Provide: %s", err)
 	}
 
-	// Add a named provider
-	//Provider(helloSayer, "some name")
-
-	// Assert
-
-	// Inject
-
 	fmt.Println(c.Stringer("echo"))
 	fmt.Println(c.Nested.Goodbye.SayGoodbye())
 }
