@@ -12,13 +12,17 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 	// Reflect the input
 	f := reflect.ValueOf(fn)
 
+	// It's slightly faster to store the type rather than constantly
+	// retrieving it.
+	ftype := f.Type()
+
 	// We can only accept functions
-	if f.Type().Kind() != reflect.Func {
+	if ftype.Kind() != reflect.Func {
 		panic("[inj.Inject] Passed argument is not a function")
 	}
 
 	// Variadic functions aren't currently supported
-	if f.Type().IsVariadic() {
+	if ftype.IsVariadic() {
 		panic("[inj.Inject] Passed function is variadic")
 	}
 
@@ -30,7 +34,7 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 	}
 
 	// Number of required incoming arguments
-	argc := f.Type().NumIn()
+	argc := ftype.NumIn()
 
 	// Assemble a list of function arguments
 	argv := make([]reflect.Value, argc)
@@ -39,7 +43,7 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 
 		func() {
 			// Get an incoming arg reflection type
-			in := f.Type().In(i)
+			in := ftype.In(i)
 
 			// Find an entry in the graph
 			for typ, node := range g.Nodes {
