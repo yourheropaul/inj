@@ -11,7 +11,7 @@ type GraphNodeDependency struct {
 	Type reflect.Type
 }
 
-func findDepdendencies(t reflect.Type, deps *[]GraphNodeDependency, path *StructPath) error {
+func findDependencies(t reflect.Type, deps *[]GraphNodeDependency, path *StructPath) error {
 
 	for i := 0; i < t.NumField(); i++ {
 
@@ -34,13 +34,13 @@ func findDepdendencies(t reflect.Type, deps *[]GraphNodeDependency, path *Struct
 			if f.Type.Kind() == reflect.Struct {
 
 				// Recurse
-				findDepdendencies(f.Type, deps, &branch)
+				findDependencies(f.Type, deps, &branch)
 			}
 
 			continue
 		}
 
-		// Assemble everything we know about the depdendency
+		// Assemble everything we know about the dependency
 		dep := parseStructTag(tag, identifier(f.Type))
 
 		// Add the path in the struct

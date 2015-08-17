@@ -16,7 +16,7 @@ func (g *Graph) connect() {
 	// loop through all nodes
 	for _, node := range g.Nodes {
 
-		// assign depdendencies to the object
+		// assign dependencies to the object
 		for _, dep := range node.Dependencies {
 			if e := g.assignValueToNode(node.Value, dep); e != nil {
 				g.UnmetDependencies++
@@ -53,7 +53,7 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) erro
 		}
 	}
 
-	return fmt.Errorf("Couldn't find suitable depdendency for %s", dep.Type)
+	return fmt.Errorf("Couldn't find suitable dependency for %s", dep.Type)
 }
 
 // Required a struct type

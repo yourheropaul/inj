@@ -97,7 +97,7 @@ func Test_GraphSimpleInjectionSadPath2(t *testing.T) {
 	g := NewGraph()
 	g.Inject(func(s string) {})
 
-	t.Error("Inject failed to panic with no depdency provided")
+	t.Error("Inject failed to panic with no dependency provided")
 }
 
 // Should panic if a variadic function is passed

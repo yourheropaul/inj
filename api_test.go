@@ -43,7 +43,7 @@ type ConcreteType struct {
 	SomethingElse int
 }
 
-// A nested type that contains depdendencies
+// A nested type that contains dependencies
 type NestedType struct {
 	Hello   InterfaceOne `inj:""`
 	Goodbye InterfaceTwo `inj:""`
@@ -80,7 +80,7 @@ func funcInstance(s string) string {
 // Assertion for concrete type
 //////////////////////////////////////////
 
-// Once the dependencies have been injected, all the depdendent
+// Once the dependencies have been injected, all the dependent
 // members should be non-nil and functional.
 func assertConcreteValue(c ConcreteType, t *testing.T) {
 

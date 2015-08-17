@@ -18,10 +18,10 @@ func (g *Graph) Provide(inputs ...interface{}) error {
 		n.Value = reflect.ValueOf(input)
 		n.Name = identifier(stype)
 
-		// For structs, find depdendencies
+		// For structs, find dependencies
 		if stype.Kind() == reflect.Struct {
 			var basePath = EmptyStructPath()
-			findDepdendencies(stype, &n.Dependencies, &basePath)
+			findDependencies(stype, &n.Dependencies, &basePath)
 		}
 	}
 

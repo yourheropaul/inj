@@ -71,7 +71,7 @@ func Test_ProvideOverride1(t *testing.T) {
 	}
 
 	// The graph now includes DEFAULT_STRING as its
-	// only met depdendency (missing dependencies covered
+	// only met dependency (missing dependencies covered
 	// by graph_assert_test.go). Adding another string
 	// to the graph shouldn't alter the value of the
 	// concrete type.

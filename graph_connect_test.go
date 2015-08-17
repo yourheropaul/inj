@@ -207,7 +207,7 @@ func Test_ConnectSadPath1(t *testing.T) {
 	}
 }
 
-// Unmet depdendencies should cause an error
+// Unmet dependencies should cause an error
 func Test_ConnectSadPath2(t *testing.T) {
 
 	g, p := NewGraph(), &validConnectTester{}
