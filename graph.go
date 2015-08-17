@@ -6,9 +6,9 @@ import "reflect"
 // dependencies, a count of currently unmet dependencies,
 // and a list of encountered errors.
 type Graph struct {
-	Nodes              nodeMap
-	UnmetDepdendencies int
-	Errors             []string
+	Nodes             nodeMap
+	UnmetDependencies int
+	Errors            []string
 }
 
 // Create a new instance of a graph with allocated memory

@@ -5,7 +5,8 @@ import (
 	"reflect"
 )
 
-// Given a function, call it with arguments from the graph
+// Given a function, call it with arguments from the graph.
+// Throws a runtime erro,r in the form of a panic, on failure.
 func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 
 	// Reflect the input
@@ -17,7 +18,7 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 	}
 
 	// Variadic functions aren't currently supported
-	if f.Type().Kind() != reflect.Func {
+	if f.Type().IsVariadic() {
 		panic("[inj.Inject] Passed function is variadic")
 	}
 
@@ -50,10 +51,10 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 			}
 		}
 
-		// CHeck the additional args, if available
+		// Check the additional args, if available
 		if !found && len(xargs) > 0 {
 
-			// Look in the additional args for the requirement
+			// Look in the additional args list for the requirement
 			for i, xarg := range xargs {
 				if xarg.AssignableTo(in) {
 					argv = append(argv, reflect.ValueOf(args[i]))
@@ -69,7 +70,6 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 		}
 	}
 
-	// Make the function call, with the args which should
-	// now be complete.
+	// Make the function call, with the args which should now be complete.
 	f.Call(argv)
 }

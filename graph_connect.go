@@ -10,7 +10,7 @@ import (
 func (g *Graph) connect() {
 
 	// Reset error counts
-	g.UnmetDepdendencies = 0
+	g.UnmetDependencies = 0
 	g.Errors = make([]string, 0)
 
 	// loop through all nodes
@@ -19,7 +19,7 @@ func (g *Graph) connect() {
 		// assign depdendencies to the object
 		for _, dep := range node.Dependencies {
 			if e := g.assignValueToNode(node.Value, dep); e != nil {
-				g.UnmetDepdendencies++
+				g.UnmetDependencies++
 				g.Errors = append(g.Errors, e.Error())
 			}
 		}

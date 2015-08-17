@@ -90,7 +90,7 @@ func Test_ConnectDepCount(t *testing.T) {
 
 	g.connect()
 
-	if g, e := g.UnmetDepdendencies, 2; g != e {
+	if g, e := g.UnmetDependencies, 2; g != e {
 		t.Errorf("Got %d unmet deps, expected %d", g, e)
 	}
 

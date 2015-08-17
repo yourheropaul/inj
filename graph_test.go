@@ -24,7 +24,7 @@ func Test_GraphInitialisation2(t *testing.T) {
 		t.Errorf("Graph was initialised with errors > 0")
 	}
 
-	if g.UnmetDepdendencies != 0 {
+	if g.UnmetDependencies != 0 {
 		t.Errorf("Graph was initialised with UnmetDepdendencies > 0")
 	}
 }
