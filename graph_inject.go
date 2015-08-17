@@ -22,9 +22,6 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 		panic("[inj.Inject] Passed function is variadic")
 	}
 
-	// Assemble a list of function arguments
-	argv := make([]reflect.Value, 0)
-
 	// Assemble extra arg types list
 	xargs := make([]reflect.Type, len(args))
 
@@ -35,16 +32,19 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 	// Number of required incoming arguments
 	argc := f.Type().NumIn()
 
-	for x := 0; x < argc; x++ {
+	// Assemble a list of function arguments
+	argv := make([]reflect.Value, argc)
 
-		func(i int) {
+	for i := 0; i < argc; i++ {
+
+		func() {
 			// Get an incoming arg reflection type
 			in := f.Type().In(i)
 
 			// Find an entry in the graph
 			for typ, node := range g.Nodes {
 				if typ.AssignableTo(in) {
-					argv = append(argv, node.Value)
+					argv[i] = node.Value
 					return
 				}
 			}
@@ -53,9 +53,9 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 			if len(xargs) > 0 {
 
 				// Look in the additional args list for the requirement
-				for i, xarg := range xargs {
+				for j, xarg := range xargs {
 					if xarg.AssignableTo(in) {
-						argv = append(argv, reflect.ValueOf(args[i]))
+						argv[i] = reflect.ValueOf(args[j])
 						return
 					}
 				}
@@ -63,7 +63,7 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 
 			// If it's STILL not found, panic
 			panic(fmt.Sprintf("[inj.Inject] Can't find value for arg %d [%s]", i, in))
-		}(x)
+		}()
 	}
 
 	// Make the function call, with the args which should now be complete.
