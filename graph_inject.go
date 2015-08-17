@@ -35,39 +35,41 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 	// Number of required incoming arguments
 	argc := f.Type().NumIn()
 
-	for i := 0; i < argc; i++ {
+	for x := 0; x < argc; x++ {
 
-		found := false
+		func(i int) {
+			found := false
 
-		// Get an incoming arg reflection type
-		in := f.Type().In(i)
+			// Get an incoming arg reflection type
+			in := f.Type().In(i)
 
-		// Find an entry in the graph
-		for typ, node := range g.Nodes {
-			if typ.AssignableTo(in) {
-				argv = append(argv, node.Value)
-				found = true
-				break
-			}
-		}
-
-		// Check the additional args, if available
-		if !found && len(xargs) > 0 {
-
-			// Look in the additional args list for the requirement
-			for i, xarg := range xargs {
-				if xarg.AssignableTo(in) {
-					argv = append(argv, reflect.ValueOf(args[i]))
+			// Find an entry in the graph
+			for typ, node := range g.Nodes {
+				if typ.AssignableTo(in) {
+					argv = append(argv, node.Value)
 					found = true
-					break
+					return
 				}
 			}
-		}
 
-		// If it's STILL not found, panic
-		if !found {
-			panic(fmt.Sprintf("[inj.Inject] Can't find value for arg %d [%s]", i, in))
-		}
+			// Check the additional args, if available
+			if !found && len(xargs) > 0 {
+
+				// Look in the additional args list for the requirement
+				for i, xarg := range xargs {
+					if xarg.AssignableTo(in) {
+						argv = append(argv, reflect.ValueOf(args[i]))
+						found = true
+						return
+					}
+				}
+			}
+
+			// If it's STILL not found, panic
+			if !found {
+				panic(fmt.Sprintf("[inj.Inject] Can't find value for arg %d [%s]", i, in))
+			}
+		}(x)
 	}
 
 	// Make the function call, with the args which should now be complete.

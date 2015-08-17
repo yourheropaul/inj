@@ -1,6 +1,9 @@
 package inj
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 const (
 	HELLO_SAYER_MESSAGE   = "Hello!"
@@ -47,6 +50,49 @@ type ConcreteType struct {
 type NestedType struct {
 	Hello   InterfaceOne `inj:""`
 	Goodbye InterfaceTwo `inj:""`
+}
+
+func (c ConcreteType) expectedDeps() []GraphNodeDependency {
+
+	d := []GraphNodeDependency{
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.Hello)),
+			Path: ".Hello",
+			Type: reflect.TypeOf(c.Hello),
+		},
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.Goodbye)),
+			Path: ".Goodbye",
+			Type: reflect.TypeOf(c.Goodbye),
+		},
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.Stringer)),
+			Path: ".Stringer",
+			Type: reflect.TypeOf(c.Stringer),
+		},
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.Channel)),
+			Path: ".Channel",
+			Type: reflect.TypeOf(c.Channel),
+		},
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.String)),
+			Path: ".String",
+			Type: reflect.TypeOf(c.String),
+		},
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.Nested.Hello)),
+			Path: ".Nested.Hello",
+			Type: reflect.TypeOf(c.Nested.Hello),
+		},
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.Nested.Goodbye)),
+			Path: ".Nested.Goodbye",
+			Type: reflect.TypeOf(c.Nested.Goodbye),
+		},
+	}
+
+	return d
 }
 
 // Channel instance

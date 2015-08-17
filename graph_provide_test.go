@@ -2,6 +2,10 @@ package inj
 
 import "testing"
 
+//////////////////////////////////////////
+// Unit tests
+//////////////////////////////////////////
+
 // Objects passed to a graph should appear in the graph and be populated
 func Test_ProvideHappyPath1(t *testing.T) {
 
@@ -85,5 +89,36 @@ func Test_ProvideOverride1(t *testing.T) {
 
 	if g, e := c.String, DEFAULT_STRING; g != e {
 		t.Errorf("Got %s, expected %s", g, e)
+	}
+}
+
+//////////////////////////////////////////
+// Benchmark tests
+//////////////////////////////////////////
+
+func BenchmarkComplexProvide(b *testing.B) {
+
+	for n := 0; n < b.N; n++ {
+		NewGraph(
+			&ConcreteType{},
+			&helloSayer{},
+			&goodbyeSayer{},
+			funcInstance,
+			ichannel,
+			DEFAULT_STRING,
+		)
+	}
+}
+
+func BenchmarkManyProvisions(b *testing.B) {
+
+	for n := 0; n < b.N; n++ {
+		g := NewGraph()
+		g.Provide(&ConcreteType{})
+		g.Provide(&helloSayer{})
+		g.Provide(&goodbyeSayer{})
+		g.Provide(funcInstance)
+		g.Provide(ichannel)
+		g.Provide(DEFAULT_STRING)
 	}
 }
