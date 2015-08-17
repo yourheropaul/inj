@@ -38,8 +38,6 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 	for x := 0; x < argc; x++ {
 
 		func(i int) {
-			found := false
-
 			// Get an incoming arg reflection type
 			in := f.Type().In(i)
 
@@ -47,28 +45,24 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 			for typ, node := range g.Nodes {
 				if typ.AssignableTo(in) {
 					argv = append(argv, node.Value)
-					found = true
 					return
 				}
 			}
 
 			// Check the additional args, if available
-			if !found && len(xargs) > 0 {
+			if len(xargs) > 0 {
 
 				// Look in the additional args list for the requirement
 				for i, xarg := range xargs {
 					if xarg.AssignableTo(in) {
 						argv = append(argv, reflect.ValueOf(args[i]))
-						found = true
 						return
 					}
 				}
 			}
 
 			// If it's STILL not found, panic
-			if !found {
-				panic(fmt.Sprintf("[inj.Inject] Can't find value for arg %d [%s]", i, in))
-			}
+			panic(fmt.Sprintf("[inj.Inject] Can't find value for arg %d [%s]", i, in))
 		}(x)
 	}
 
