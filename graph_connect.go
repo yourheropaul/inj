@@ -5,6 +5,8 @@ import (
 	"reflect"
 )
 
+// Usually called after Provide() to assign the values
+// of all requested dependencies.
 func (g *Graph) connect() {
 
 	// Reset error counts
@@ -16,7 +18,7 @@ func (g *Graph) connect() {
 
 		// assign depdendencies to the object
 		for _, dep := range node.Dependencies {
-			if e := g.assignValueToNode(reflect.ValueOf(node.Object), dep); e != nil {
+			if e := g.assignValueToNode(node.Value, dep); e != nil {
 				g.UnmetDepdendencies++
 				g.Errors = append(g.Errors, e.Error())
 			}
@@ -54,11 +56,17 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) erro
 	return fmt.Errorf("Couldn't find suitable depdendency for %s", dep.Type)
 }
 
+// Required a struct type
 func (g *Graph) findFieldValue(parent reflect.Value, path StructPath) (reflect.Value, error) {
 
 	// Dereference incoming values
 	if parent.Kind() == reflect.Ptr {
 		parent = parent.Elem()
+	}
+
+	// Only accept structs
+	if parent.Kind() != reflect.Struct {
+		return parent, fmt.Errorf("Type is %s, not struct", parent.Kind().String())
 	}
 
 	// Take the first entry from the path
