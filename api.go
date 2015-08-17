@@ -14,7 +14,7 @@ type Grapher interface {
 }
 
 //////////////////////////////////////////////
-// The one global variable
+// The one true global variable
 //////////////////////////////////////////////
 
 // A default grapher to use in the public API
