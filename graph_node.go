@@ -2,13 +2,6 @@ package inj
 
 import "reflect"
 
-type GraphNodeDependency struct {
-	Name    string
-	Path    StructPath
-	Private bool
-	Type    reflect.Type
-}
-
 // Should this be exported?
 type GraphNode struct {
 	Name         string

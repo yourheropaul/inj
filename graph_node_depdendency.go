@@ -5,6 +5,12 @@ import (
 	"strings"
 )
 
+type GraphNodeDependency struct {
+	Name string
+	Path StructPath
+	Type reflect.Type
+}
+
 func findDepdendencies(t reflect.Type, deps *[]GraphNodeDependency, path *StructPath) error {
 
 	for i := 0; i < t.NumField(); i++ {
@@ -58,10 +64,6 @@ func parseStructTag(t reflect.StructTag, defaultName string) (d GraphNodeDepende
 
 	if len(parts) > 0 && len(parts[0]) > 0 {
 		d.Name = parts[0]
-	}
-
-	if len(parts) > 1 {
-		// FIXME! parse private
 	}
 
 	return
