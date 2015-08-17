@@ -12,12 +12,14 @@ type Graph struct {
 }
 
 // Create a new instance of a graph with allocated memory
-func NewGraph() (g *Graph) {
+func NewGraph(providers ...interface{}) (g *Graph) {
 
 	g = &Graph{}
 
 	g.Nodes = make(nodeMap)
 	g.Errors = make([]string, 0)
+
+	g.Provide(providers...)
 
 	return
 }
