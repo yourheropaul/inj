@@ -80,6 +80,8 @@ func funcInstance(s string) string {
 // Assertion for concrete type
 //////////////////////////////////////////
 
+// Once the dependencies have been injected, all the depdendent
+// members should be non-nil and functional.
 func assertConcreteValue(c ConcreteType, t *testing.T) {
 
 	if c.Hello == nil {
