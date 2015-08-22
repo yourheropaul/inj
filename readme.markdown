@@ -1,10 +1,9 @@
+[![Build Status](https://travis-ci.org/yourheropaul/inj.svg?branch=master)](https://travis-ci.org/yourheropaul/inj) [![GoDoc](https://godoc.org/github.com/yourheropaul/inj?status.svg)](https://godoc.org/github.com/yourheropaul/inj)
+======
+
 Are you troubled by dependency configuration issues in the middle of the night? Do you experience feelings of dread at the code boundaries of your application or during functional testing? Have you or your team ever used a global variable, exported package-level object or a build constraint hack? If the answer is *yes*, then don't wait another minute. Pick up your terminal and `go get github.com/yourheropaul/inj` today.
 
 Remember: inject yourself before you wreck yourself.
-
-======
-[![Build Status](https://travis-ci.org/yourheropaul/inj.svg?branch=master)](https://travis-ci.org/yourheropaul/inj) [![GoDoc](https://godoc.org/github.com/yourheropaul/inj?status.svg)](https://godoc.org/github.com/yourheropaul/inj)
-======
 
 ### What *is* this thing?
 
