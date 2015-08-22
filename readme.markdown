@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/yourheropaul/inj.svg?branch=master)](https://travis-ci.org/yourheropaul/inj) [![Coverage Status](https://coveralls.io/repos/yourheropaul/inj/badge.svg?branch=master&service=github)](https://coveralls.io/github/yourheropaul/inj?branch=master) [![GoDoc](https://godoc.org/github.com/yourheropaul/inj?status.svg)](https://godoc.org/github.com/yourheropaul/inj) [![Example](https://img.shields.io/badge/code-example-2a988f.svg)](http://github.com/yourheropaul/inj/example) [![YHP](https://img.shields.io/badge/author-yourheropaul-f08332.svg)](http://yhp.io) [![Slashie](https://img.shields.io/badge/ridiculously-goodlooking-736caf.svg)](http://yhp.io)
+[![Build Status](https://travis-ci.org/yourheropaul/inj.svg?branch=master)](https://travis-ci.org/yourheropaul/inj) [![Coverage Status](https://coveralls.io/repos/yourheropaul/inj/badge.svg?branch=master&service=github)](https://coveralls.io/github/yourheropaul/inj?branch=master) [![GoDoc](https://godoc.org/github.com/yourheropaul/inj?status.svg)](https://godoc.org/github.com/yourheropaul/inj) [![Example](https://img.shields.io/badge/code-example-2a988f.svg)](https://github.com/yourheropaul/inj/tree/master/example) [![YHP](https://img.shields.io/badge/author-YHP-f08332.svg)](http://yhp.io) [![Slashie](https://img.shields.io/badge/ridiculously-goodlooking-736caf.svg)](http://yhp.io)
 ======
 
 Are you troubled by dependency configuration issues in the middle of the night? Do you experience feelings of dread at the code boundaries of your application or during functional testing? Have you or your team ever used a global variable, exported package-level object or a build constraint hack? If the answer is *yes*, then don't wait another minute. Pick up your terminal and `go get github.com/yourheropaul/inj` today.
@@ -15,7 +15,7 @@ Come on and inject yourself before you wreck yourself.
 
 ### How do I use it?
 
-Check out the [example application](http://github.com/yourheropaul/inj/example) in this repository. The API is small, and everything is demonstrated there. Technical documentation is also available on [godoc.org](https://godoc.org/github.com/yourheropaul/inj).
+Check out the [example application](https://github.com/yourheropaul/inj/tree/master/example) in this repository. The API is small, and everything is demonstrated there. Technical documentation is also available on [godoc.org](https://godoc.org/github.com/yourheropaul/inj).
 
 ### I want absolutely, positively no globals in my application. None. Can I do that with this package?
 
