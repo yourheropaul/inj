@@ -32,7 +32,7 @@ There are currently no values to pass in the struct tag. Future versions may mak
 moment all tags must pass strings in double quotes to satisfy Go's reflect.StructTag parsing.
 
 It should be noted that any field can be associatd with the tag. The field doesn't have to be a special type, and
-there are limits (aside from the constraints of the language itself) as to what they can be.
+there are no limits (aside from the constraints of the language itself) as to what they can be.
 
 `Application`'s functions (there are three) are at the end of this file.
 */
