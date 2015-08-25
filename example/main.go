@@ -159,7 +159,7 @@ returns a function) doesn't necessarily clear things up. It might be easier to v
 		func(s string, i int) {
 			fmt.Sprintf("String value: %s, int value: %d", s, i)
 		},
-		10
+		10 // This is an int value
 	)
 
 The code above inserts a string value into the graph and then `inj.Inject()` to call a function. The function is called
