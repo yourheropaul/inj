@@ -45,14 +45,6 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 			// Get an incoming arg reflection type
 			in := ftype.In(i)
 
-			// Find an entry in the graph
-			for typ, node := range g.Nodes {
-				if typ.AssignableTo(in) {
-					argv[i] = node.Value
-					return
-				}
-			}
-
 			// Check the additional args, if available
 			if len(xargs) > 0 {
 
@@ -62,6 +54,14 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 						argv[i] = reflect.ValueOf(args[j])
 						return
 					}
+				}
+			}
+
+			// Find an entry in the graph
+			for j := 0; j < len(g.indexes); j++ {
+				if g.indexes[j].AssignableTo(in) {
+					argv[i] = g.Nodes[g.indexes[j]].Value
+					return
 				}
 			}
 

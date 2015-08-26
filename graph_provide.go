@@ -25,8 +25,21 @@ func (g *Graph) Provide(inputs ...interface{}) error {
 		}
 	}
 
+	///////////////////////////////////////////////
 	// Plug everything together
+	///////////////////////////////////////////////
+
 	g.connect()
+
+	///////////////////////////////////////////////
+	// Store a list of types for speed later on
+	///////////////////////////////////////////////
+
+	g.indexes = make([]reflect.Type, 0)
+
+	for typ, _ := range g.Nodes {
+		g.indexes = append(g.indexes, typ)
+	}
 
 	return nil
 }

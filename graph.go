@@ -9,6 +9,7 @@ type Graph struct {
 	Nodes             nodeMap
 	UnmetDependencies int
 	Errors            []string
+	indexes           []reflect.Type
 }
 
 // Create a new instance of a graph with allocated memory

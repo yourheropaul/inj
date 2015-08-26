@@ -164,7 +164,7 @@ func Test_GraphComplexInjectionHappyPath2(t *testing.T) {
 
 	// Pass an anonymous function
 	g.Inject(func(s string) {
-		if s != "string one" {
+		if s != "string two" {
 			t.Fatalf("Expected 'string one', got %s", s)
 		}
 	}, "string two")
