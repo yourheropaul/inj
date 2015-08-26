@@ -45,15 +45,11 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 			// Get an incoming arg reflection type
 			in := ftype.In(i)
 
-			// Check the additional args, if available
-			if len(xargs) > 0 {
-
-				// Look in the additional args list for the requirement
-				for j, xarg := range xargs {
-					if xarg.AssignableTo(in) {
-						argv[i] = reflect.ValueOf(args[j])
-						return
-					}
+			// Look in the additional args list for the requirement
+			for j, xarg := range xargs {
+				if xarg.AssignableTo(in) {
+					argv[i] = reflect.ValueOf(args[j])
+					return
 				}
 			}
 
