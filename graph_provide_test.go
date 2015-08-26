@@ -30,9 +30,14 @@ func Test_ProvideHappyPath1(t *testing.T) {
 
 	// Check the whole type
 	assertConcreteValue(c, t)
+
+	// Check index count
+	if g, e := len(g.indexes), 6; g != e {
+		t.Errorf("Expected %d indexes, got %d", g, e)
+	}
 }
 
-// Multiple calls to Provide shouldh have the same effect as a single call
+// Multiple calls to Provide should have the same effect as a single call
 func Test_ProvideHappyPath2(t *testing.T) {
 
 	g, c := NewGraph(), ConcreteType{}
@@ -60,6 +65,11 @@ func Test_ProvideHappyPath2(t *testing.T) {
 
 	// Check the whole type
 	assertConcreteValue(c, t)
+
+	// Check index count
+	if g, e := len(g.indexes), 6; g != e {
+		t.Errorf("Expected %d indexes, got %d", g, e)
+	}
 }
 
 // New dependency provisions shouldn't overwrite previously set ones
@@ -72,6 +82,11 @@ func Test_ProvideOverride1(t *testing.T) {
 		DEFAULT_STRING,
 	); err != nil {
 		t.Fatalf("Graph.Provide: %s", err)
+	}
+
+	// Check index count
+	if g, e := len(g.indexes), 2; g != e {
+		t.Errorf("[1] Expected %d indexes, got %d", g, e)
 	}
 
 	// The graph now includes DEFAULT_STRING as its
@@ -89,6 +104,11 @@ func Test_ProvideOverride1(t *testing.T) {
 
 	if g, e := c.String, DEFAULT_STRING; g != e {
 		t.Errorf("Got %s, expected %s", g, e)
+	}
+
+	// Check index count
+	if g, e := len(g.indexes), 2; g != e {
+		t.Errorf("[1] Expected %d indexes, got %d", g, e)
 	}
 }
 
