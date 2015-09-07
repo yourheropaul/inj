@@ -153,7 +153,7 @@ func Test_Application(t *testing.T) {
 		t.Fatalf("inj.Assert() failed: %s", messages)
 	}
 
-	// Run the application in its own goroutine. It should stay running until its explicitly
+	// Run the application in its own goroutine. It should stay running until it's explicitly
 	// shut down
 	go app.run()
 
