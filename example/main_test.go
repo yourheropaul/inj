@@ -2,7 +2,7 @@ package main
 
 /*
 The test component of the inj/example application demonstrates the use of mock objects by
-constructing a special graph of test object that conforms to the application specification,
+constructing a special graph of test objects that conforms to the application requirements,
 and then runs the application.
 
 Run this package's tests in verbose mode (`go test -test.v`) to get the full experience.
