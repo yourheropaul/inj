@@ -104,6 +104,17 @@ type HasEmbeddable struct {
 	Embeddable `inj:""`
 }
 
+func (c HasEmbeddable) expectedDeps() []GraphNodeDependency {
+
+	return []GraphNodeDependency{
+		GraphNodeDependency{
+			Name: identifier(reflect.TypeOf(&c.Embeddable)),
+			Path: ".Embeddable",
+			Type: reflect.TypeOf(c.Embeddable),
+		},
+	}
+}
+
 // Channel instance
 var ichannel = make(ChanType)
 

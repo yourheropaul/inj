@@ -38,6 +38,28 @@ func Test_FindDependencies(t *testing.T) {
 	}
 }
 
+// findDependencies should populate a known number of deps
+func Test_FindDependenciesInEmbeddedStructs(t *testing.T) {
+
+	c := HasEmbeddable{}
+	d := make([]GraphNodeDependency, 0)
+	s := EmptyStructPath()
+
+	if e := findDependencies(reflect.TypeOf(c), &d, &s); e != nil {
+		t.Errorf("Unexpected error: %s", e)
+	}
+
+	eds := c.expectedDeps()
+
+	if g, e := len(d), len(eds); g != e {
+		t.Errorf("Expected %d deps in c, got %d", e, g)
+	}
+
+	for i, ed := range eds {
+		compareGraphNodeDeps(ed, d[i], t)
+	}
+}
+
 // parseStructTag should return expected struct tags
 func Test_ParseStructTag(t *testing.T) {
 
