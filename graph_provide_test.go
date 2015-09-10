@@ -112,6 +112,26 @@ func Test_ProvideOverride1(t *testing.T) {
 	}
 }
 
+// Embedded structs should parsed like any other
+func Test_EmbeddedStructProvision(t *testing.T) {
+
+	g := NewGraph()
+
+	e, he := Embeddable{X: 10}, &HasEmbeddable{}
+
+	if err := g.Provide(e, he); err != nil {
+		t.Fatalf("g.Provide: %s", err.Error())
+	}
+
+	if v, errs := g.Assert(); !v {
+		t.Error(errs)
+	}
+
+	if g, e := e.X, he.X; g != e {
+		t.Errorf("Values don't match: got %d, expected %d", g, e)
+	}
+}
+
 //////////////////////////////////////////
 // Benchmark tests
 //////////////////////////////////////////

@@ -18,7 +18,7 @@ func findDependencies(t reflect.Type, deps *[]GraphNodeDependency, path *StructP
 		f := t.Field(i)
 
 		// Ignore unpexported fields, regardless of tags
-		if f.Anonymous {
+		if f.PkgPath != "" {
 			continue
 		}
 

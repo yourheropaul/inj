@@ -95,6 +95,15 @@ func (c ConcreteType) expectedDeps() []GraphNodeDependency {
 	return d
 }
 
+// Data types for anonymous field testing
+type Embeddable struct {
+	X int
+}
+
+type HasEmbeddable struct {
+	Embeddable `inj:""`
+}
+
 // Channel instance
 var ichannel = make(ChanType)
 
