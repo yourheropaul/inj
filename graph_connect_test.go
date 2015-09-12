@@ -256,7 +256,7 @@ func Test_ConnectFindFieldValue(t *testing.T) {
 	}
 
 	for _, d := range descs {
-		rv, e := g.findFieldValue(v, d.path)
+		rv, e := g.findFieldValue(v, d.path, &[]reflect.Value{})
 
 		if e != nil {
 			t.Errorf("findFieldValue: %s", e.Error())
@@ -274,7 +274,7 @@ func Test_ConnectF(t *testing.T) {
 
 	g := NewGraph()
 
-	_, e := g.findFieldValue(reflect.ValueOf("123"), ".Child1")
+	_, e := g.findFieldValue(reflect.ValueOf("123"), ".Child1", &[]reflect.Value{})
 
 	if e == nil {
 		fmt.Errorf("Didn't error when type wasn't struct")
@@ -286,7 +286,7 @@ func Test_ConnectG(t *testing.T) {
 
 	g, p := NewGraph(), &validConnectTester{}
 
-	_, e := g.findFieldValue(reflect.ValueOf(p), ".This.Doesnt.Exist")
+	_, e := g.findFieldValue(reflect.ValueOf(p), ".This.Doesnt.Exist", &[]reflect.Value{})
 
 	if e == nil {
 		fmt.Errorf("Didn't error when path was wrong")

@@ -28,7 +28,8 @@ func (g *Graph) connect() {
 
 func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) error {
 
-	v, err := g.findFieldValue(o, dep.Path)
+	parents := []reflect.Value{}
+	v, err := g.findFieldValue(o, dep.Path, &parents)
 
 	if err != nil {
 		return err
@@ -47,6 +48,21 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) erro
 	// Run through the graph and see if anything is settable
 	for typ, node := range g.Nodes {
 
+		valid := true
+
+		// Don't assign anything to itself or its children
+		for _, parent := range parents {
+
+			if parent.Interface() == node.Value.Interface() {
+				valid = false
+				break
+			}
+		}
+
+		if !valid {
+			continue
+		}
+
 		if typ.AssignableTo(v.Type()) {
 			v.Set(node.Value)
 			return nil
@@ -57,7 +73,9 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) erro
 }
 
 // Required a struct type
-func (g *Graph) findFieldValue(parent reflect.Value, path StructPath) (reflect.Value, error) {
+func (g *Graph) findFieldValue(parent reflect.Value, path StructPath, linneage *[]reflect.Value) (reflect.Value, error) {
+
+	*linneage = append(*linneage, parent)
 
 	// Dereference incoming values
 	if parent.Kind() == reflect.Ptr {
@@ -85,5 +103,5 @@ func (g *Graph) findFieldValue(parent reflect.Value, path StructPath) (reflect.V
 	}
 
 	// Otherwise recurse
-	return g.findFieldValue(f, path)
+	return g.findFieldValue(f, path, linneage)
 }

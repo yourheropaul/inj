@@ -191,3 +191,44 @@ func assertConcreteValue(c ConcreteType, t *testing.T) {
 		t.Errorf("Test Stringer: got %s, expected %s", g, e)
 	}
 }
+
+//////////////////////////////////////////
+// Self-referential, ouroboros types
+//////////////////////////////////////////
+
+type Valuer interface {
+	Value() int
+}
+
+// Self-referential valuer #1
+type Ouroboros1 struct {
+	A Valuer `inj:""`
+	B Valuer `inj:""`
+	V int
+}
+
+func (o Ouroboros1) Value() int { return o.V }
+
+// Self-referential valuer #2
+type Ouroboros2 struct {
+	A Valuer `inj:""`
+	B Valuer `inj:""`
+	V int
+}
+
+func (o Ouroboros2) Value() int { return o.V }
+
+// Self-referential valuer #3
+type Ouroboros3 struct {
+	V int
+}
+
+func (o Ouroboros3) Value() int { return o.V }
+
+// Self-referential valuer #4
+type Ouroboros4 struct {
+	Ouroboros3 `inj:""`
+	V          int
+}
+
+func (o Ouroboros4) Value() int { return o.V }
