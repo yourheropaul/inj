@@ -2,21 +2,21 @@ package inj
 
 import "testing"
 
-// EmptyStructPath should return an empty struct path
-func Test_StructPathA(t *testing.T) {
+// smptystructPath should return an empty struct path
+func Test_structPathA(t *testing.T) {
 
-	if string(EmptyStructPath()) != "" {
-		t.Errorf("EmptyStructPath() didn't return empty string")
+	if string(emptyStructPath()) != "" {
+		t.Errorf("smptystructPath() didn't return empty string")
 	}
 }
 
 // Branching should work intuitively
-func Test_StructPathB(t *testing.T) {
+func Test_structPathB(t *testing.T) {
 
 	inputs := []struct {
-		start StructPath
+		start structPath
 		add   string
-		end   StructPath
+		end   structPath
 	}{
 		{"", "Node", ".Node"},
 		{".Node", "Node", ".Node.Node"},
@@ -24,7 +24,7 @@ func Test_StructPathB(t *testing.T) {
 	}
 
 	for i, input := range inputs {
-		sp := StructPath(input.start)
+		sp := structPath(input.start)
 		sp = sp.Branch(input.add)
 
 		if g, e := sp, input.end; g != e {
@@ -34,12 +34,12 @@ func Test_StructPathB(t *testing.T) {
 }
 
 // Shifting should work intuitively
-func Test_StructPathC(t *testing.T) {
+func Test_structPathC(t *testing.T) {
 
 	inputs := []struct {
-		start StructPath
+		start structPath
 		str   string
-		sp    StructPath
+		sp    structPath
 	}{
 		{"", "", ""},
 		{".Node", "Node", ""},
@@ -48,7 +48,7 @@ func Test_StructPathC(t *testing.T) {
 	}
 
 	for i, input := range inputs {
-		sp := StructPath(input.start)
+		sp := structPath(input.start)
 		s, sp2 := sp.Shift()
 
 		if g, e := s, input.str; g != e {
@@ -63,10 +63,10 @@ func Test_StructPathC(t *testing.T) {
 
 // Emptying a structpath should cause the Empty() func to
 // return true
-func Test_StructPathD(t *testing.T) {
-	sp := StructPath("")
+func Test_structPathD(t *testing.T) {
+	sp := structPath("")
 
 	if !sp.Empty() {
-		t.Errorf("StructPath wasn't empty when it should be")
+		t.Errorf("structPath wasn't empty when it should be")
 	}
 }

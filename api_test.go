@@ -52,40 +52,40 @@ type NestedType struct {
 	Goodbye InterfaceTwo `inj:""`
 }
 
-func (c ConcreteType) expectedDeps() []GraphNodeDependency {
+func (c ConcreteType) expectedDeps() []graphNodeDependency {
 
-	d := []GraphNodeDependency{
-		GraphNodeDependency{
+	d := []graphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.Hello)),
 			Path: ".Hello",
 			Type: reflect.TypeOf(c.Hello),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.Goodbye)),
 			Path: ".Goodbye",
 			Type: reflect.TypeOf(c.Goodbye),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.Stringer)),
 			Path: ".Stringer",
 			Type: reflect.TypeOf(c.Stringer),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.Channel)),
 			Path: ".Channel",
 			Type: reflect.TypeOf(c.Channel),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.String)),
 			Path: ".String",
 			Type: reflect.TypeOf(c.String),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.Nested.Hello)),
 			Path: ".Nested.Hello",
 			Type: reflect.TypeOf(c.Nested.Hello),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.Nested.Goodbye)),
 			Path: ".Nested.Goodbye",
 			Type: reflect.TypeOf(c.Nested.Goodbye),
@@ -104,10 +104,10 @@ type HasEmbeddable struct {
 	Embeddable `inj:""`
 }
 
-func (c HasEmbeddable) expectedDeps() []GraphNodeDependency {
+func (c HasEmbeddable) expectedDeps() []graphNodeDependency {
 
-	return []GraphNodeDependency{
-		GraphNodeDependency{
+	return []graphNodeDependency{
+		graphNodeDependency{
 			Name: identifier(reflect.TypeOf(&c.Embeddable)),
 			Path: ".Embeddable",
 			Type: reflect.TypeOf(c.Embeddable),

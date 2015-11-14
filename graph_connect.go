@@ -14,7 +14,7 @@ func (g *Graph) connect() {
 	g.Errors = make([]string, 0)
 
 	// loop through all nodes
-	for _, node := range g.Nodes {
+	for _, node := range g.nodes {
 
 		// assign dependencies to the object
 		for _, dep := range node.Dependencies {
@@ -26,7 +26,7 @@ func (g *Graph) connect() {
 	}
 }
 
-func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) error {
+func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) error {
 
 	parents := []reflect.Value{}
 	v, err := g.findFieldValue(o, dep.Path, &parents)
@@ -46,7 +46,7 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) erro
 	}
 
 	// Run through the graph and see if anything is settable
-	for typ, node := range g.Nodes {
+	for typ, node := range g.nodes {
 
 		valid := true
 
@@ -73,7 +73,7 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep GraphNodeDependency) erro
 }
 
 // Required a struct type
-func (g *Graph) findFieldValue(parent reflect.Value, path StructPath, linneage *[]reflect.Value) (reflect.Value, error) {
+func (g *Graph) findFieldValue(parent reflect.Value, path structPath, linneage *[]reflect.Value) (reflect.Value, error) {
 
 	*linneage = append(*linneage, parent)
 

@@ -56,7 +56,7 @@ func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 			// Find an entry in the graph
 			for j := 0; j < len(g.indexes); j++ {
 				if g.indexes[j].AssignableTo(in) {
-					argv[i] = g.Nodes[g.indexes[j]].Value
+					argv[i] = g.nodes[g.indexes[j]].Value
 					return
 				}
 			}

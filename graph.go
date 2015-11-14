@@ -6,7 +6,7 @@ import "reflect"
 // dependencies, a count of currently unmet dependencies,
 // and a list of encountered errors.
 type Graph struct {
-	Nodes             nodeMap
+	nodes             nodeMap
 	UnmetDependencies int
 	Errors            []string
 	indexes           []reflect.Type
@@ -17,7 +17,7 @@ func NewGraph(providers ...interface{}) (g *Graph) {
 
 	g = &Graph{}
 
-	g.Nodes = make(nodeMap)
+	g.nodes = make(nodeMap)
 	g.Errors = make([]string, 0)
 
 	g.Provide(providers...)
@@ -26,10 +26,10 @@ func NewGraph(providers ...interface{}) (g *Graph) {
 }
 
 // Add a node by reflection type
-func (g *Graph) add(typ reflect.Type) (n *GraphNode) {
+func (g *Graph) add(typ reflect.Type) (n *graphNode) {
 
-	n = NewGraphNode()
-	g.Nodes[typ] = n
+	n = newGraphNode()
+	g.nodes[typ] = n
 
 	return
 }

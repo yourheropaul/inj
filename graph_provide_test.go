@@ -24,7 +24,7 @@ func Test_ProvideHappyPath1(t *testing.T) {
 	}
 
 	// There should be exactly six nodes in the graph now
-	if g, e := len(g.Nodes), 6; g != e {
+	if g, e := len(g.nodes), 6; g != e {
 		t.Errorf("Got %d nodes, expected %d", g, e)
 	}
 
@@ -59,7 +59,7 @@ func Test_ProvideHappyPath2(t *testing.T) {
 	}
 
 	// There should be exactly six nodes in the graph now
-	if g, e := len(g.Nodes), 6; g != e {
+	if g, e := len(g.nodes), 6; g != e {
 		t.Errorf("Got %d nodes, expected %d", g, e)
 	}
 

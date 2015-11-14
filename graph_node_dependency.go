@@ -5,13 +5,13 @@ import (
 	"strings"
 )
 
-type GraphNodeDependency struct {
+type graphNodeDependency struct {
 	Name string
-	Path StructPath
+	Path structPath
 	Type reflect.Type
 }
 
-func findDependencies(t reflect.Type, deps *[]GraphNodeDependency, path *StructPath) error {
+func findDependencies(t reflect.Type, deps *[]graphNodeDependency, path *structPath) error {
 
 	for i := 0; i < t.NumField(); i++ {
 
@@ -56,7 +56,7 @@ func findDependencies(t reflect.Type, deps *[]GraphNodeDependency, path *StructP
 	return nil
 }
 
-func parseStructTag(t reflect.StructTag, defaultName string) (d GraphNodeDependency) {
+func parseStructTag(t reflect.StructTag, defaultName string) (d graphNodeDependency) {
 
 	d.Name = defaultName
 

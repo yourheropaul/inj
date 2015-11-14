@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func compareGraphNodeDeps(d1 GraphNodeDependency, d2 GraphNodeDependency, t *testing.T) {
+func compareGraphNodeDeps(d1 graphNodeDependency, d2 graphNodeDependency, t *testing.T) {
 
 	if d1.Path != d2.Path {
 		t.Errorf("compareGraphNodeDeps: paths don't match (%s,%s)", d1.Path, d2.Path)
@@ -20,8 +20,8 @@ func compareGraphNodeDeps(d1 GraphNodeDependency, d2 GraphNodeDependency, t *tes
 func Test_FindDependencies(t *testing.T) {
 
 	c := ConcreteType{}
-	d := make([]GraphNodeDependency, 0)
-	s := EmptyStructPath()
+	d := make([]graphNodeDependency, 0)
+	s := emptyStructPath()
 
 	if e := findDependencies(reflect.TypeOf(c), &d, &s); e != nil {
 		t.Errorf("Unexpected error: %s", e)
@@ -42,8 +42,8 @@ func Test_FindDependencies(t *testing.T) {
 func Test_FindDependenciesInEmbeddedStructs(t *testing.T) {
 
 	c := HasEmbeddable{}
-	d := make([]GraphNodeDependency, 0)
-	s := EmptyStructPath()
+	d := make([]graphNodeDependency, 0)
+	s := emptyStructPath()
 
 	if e := findDependencies(reflect.TypeOf(c), &d, &s); e != nil {
 		t.Errorf("Unexpected error: %s", e)

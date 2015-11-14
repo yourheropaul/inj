@@ -2,22 +2,21 @@ package inj
 
 import "reflect"
 
-// Should this be exported?
-type GraphNode struct {
+type graphNode struct {
 	Name         string
 	Object       interface{}
 	Type         reflect.Type
 	Value        reflect.Value
-	Dependencies []GraphNodeDependency
+	Dependencies []graphNodeDependency
 }
 
-type nodeMap map[reflect.Type]*GraphNode
+type nodeMap map[reflect.Type]*graphNode
 
-func NewGraphNode() (n *GraphNode) {
+func newGraphNode() (n *graphNode) {
 
-	n = &GraphNode{}
+	n = &graphNode{}
 
-	n.Dependencies = make([]GraphNodeDependency, 0)
+	n.Dependencies = make([]graphNodeDependency, 0)
 
 	return
 }

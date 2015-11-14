@@ -20,7 +20,7 @@ func (g *Graph) Provide(inputs ...interface{}) error {
 
 		// For structs, find dependencies
 		if stype.Kind() == reflect.Struct {
-			var basePath = EmptyStructPath()
+			var basePath = emptyStructPath()
 			findDependencies(stype, &n.Dependencies, &basePath)
 		}
 	}
@@ -37,7 +37,7 @@ func (g *Graph) Provide(inputs ...interface{}) error {
 
 	g.indexes = make([]reflect.Type, 0)
 
-	for typ, _ := range g.Nodes {
+	for typ, _ := range g.nodes {
 		g.indexes = append(g.indexes, typ)
 	}
 

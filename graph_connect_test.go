@@ -60,7 +60,7 @@ func Test_ConnectHappyPath(t *testing.T) {
 	// The main test is of the graph itself
 	c1_found, c2_found := false, false
 
-	for _, n := range g.Nodes {
+	for _, n := range g.nodes {
 
 		if n.Object == c1 {
 			c1_found = true
@@ -106,15 +106,15 @@ func Test_ConnectAssignmentHappyPath(t *testing.T) {
 	c1, c2 := newChildren()
 	v := reflect.ValueOf(p)
 
-	gnds := []GraphNodeDependency{
-		GraphNodeDependency{
+	gnds := []graphNodeDependency{
+		graphNodeDependency{
 			Name: "Child1",
-			Path: StructPath(".Child1"),
+			Path: structPath(".Child1"),
 			Type: reflect.TypeOf(c1),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: "Child2",
-			Path: StructPath(".Child2"),
+			Path: structPath(".Child2"),
 			Type: reflect.TypeOf(c2),
 		},
 	}
@@ -150,15 +150,15 @@ func Test_ConnectAssignmentNeutralPath(t *testing.T) {
 	p.Child1 = c1
 	p.Child2 = c2
 
-	gnds := []GraphNodeDependency{
-		GraphNodeDependency{
+	gnds := []graphNodeDependency{
+		graphNodeDependency{
 			Name: "Child1",
-			Path: StructPath(".Child1"),
+			Path: structPath(".Child1"),
 			Type: reflect.TypeOf(c1),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: "Child2",
-			Path: StructPath(".Child2"),
+			Path: structPath(".Child2"),
 			Type: reflect.TypeOf(c2),
 		},
 	}
@@ -189,10 +189,10 @@ func Test_ConnectSadPath1(t *testing.T) {
 	c1, c2 := newChildren()
 	v := reflect.ValueOf(p)
 
-	gnds := []GraphNodeDependency{
-		GraphNodeDependency{
+	gnds := []graphNodeDependency{
+		graphNodeDependency{
 			Name: "Child2",
-			Path: StructPath(".child2"),
+			Path: structPath(".child2"),
 			Type: reflect.TypeOf(c2),
 		},
 	}
@@ -214,15 +214,15 @@ func Test_ConnectSadPath2(t *testing.T) {
 	c1, c2 := newChildren()
 	v := reflect.ValueOf(p)
 
-	gnds := []GraphNodeDependency{
-		GraphNodeDependency{
+	gnds := []graphNodeDependency{
+		graphNodeDependency{
 			Name: "Child1",
-			Path: StructPath(".Child1"),
+			Path: structPath(".Child1"),
 			Type: reflect.TypeOf(c1),
 		},
-		GraphNodeDependency{
+		graphNodeDependency{
 			Name: "Child2",
-			Path: StructPath(".Child2"),
+			Path: structPath(".Child2"),
 			Type: reflect.TypeOf(c2),
 		},
 	}
@@ -243,15 +243,15 @@ func Test_ConnectFindFieldValue(t *testing.T) {
 
 	var descs = []struct {
 		fieldName string
-		path      StructPath
+		path      structPath
 	}{
 		{
 			fieldName: "*inj.connectTesterChild1",
-			path:      StructPath(".Child1"),
+			path:      structPath(".Child1"),
 		},
 		{
 			fieldName: "*inj.connectTesterChild2",
-			path:      StructPath(".Child2"),
+			path:      structPath(".Child2"),
 		},
 	}
 
