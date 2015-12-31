@@ -56,37 +56,30 @@ func (c ConcreteType) expectedDeps() []graphNodeDependency {
 
 	d := []graphNodeDependency{
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.Hello)),
 			Path: ".Hello",
 			Type: reflect.TypeOf(c.Hello),
 		},
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.Goodbye)),
 			Path: ".Goodbye",
 			Type: reflect.TypeOf(c.Goodbye),
 		},
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.Stringer)),
 			Path: ".Stringer",
 			Type: reflect.TypeOf(c.Stringer),
 		},
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.Channel)),
 			Path: ".Channel",
 			Type: reflect.TypeOf(c.Channel),
 		},
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.String)),
 			Path: ".String",
 			Type: reflect.TypeOf(c.String),
 		},
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.Nested.Hello)),
 			Path: ".Nested.Hello",
 			Type: reflect.TypeOf(c.Nested.Hello),
 		},
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.Nested.Goodbye)),
 			Path: ".Nested.Goodbye",
 			Type: reflect.TypeOf(c.Nested.Goodbye),
 		},
@@ -108,7 +101,6 @@ func (c HasEmbeddable) expectedDeps() []graphNodeDependency {
 
 	return []graphNodeDependency{
 		graphNodeDependency{
-			Name: identifier(reflect.TypeOf(&c.Embeddable)),
 			Path: ".Embeddable",
 			Type: reflect.TypeOf(c.Embeddable),
 		},

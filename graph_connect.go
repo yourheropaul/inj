@@ -45,6 +45,24 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 		return fmt.Errorf("%s%s can't be set", o, dep.Path)
 	}
 
+	// If there are any datasource paths supplied...
+	for _, path := range dep.DatasourcePaths {
+
+		// ...check to see if a datasource reader has the value
+		for _, d := range g.datasourceReaders {
+
+			if dsvalue, err := d.Read(path); err == nil {
+
+				typ := reflect.TypeOf(dsvalue)
+
+				if typ.AssignableTo(v.Type()) {
+					v.Set(reflect.ValueOf(dsvalue))
+					return nil
+				}
+			}
+		}
+	}
+
 	// Run through the graph and see if anything is settable
 	for typ, node := range g.nodes {
 
