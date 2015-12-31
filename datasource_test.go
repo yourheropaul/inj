@@ -45,6 +45,7 @@ func (d *MockDatasource) Write(key string, value interface{}) error {
 type dataSourceDep struct {
 	StringValue string   `inj:"datasource.string"`
 	FuncValue   FuncType `inj:"datasource.func"`
+	IntValue    int      `inj:"datasource.int"`
 }
 
 func newMockDataSourceWithValues(t *testing.T) Datasource {
@@ -56,6 +57,11 @@ func newMockDataSourceWithValues(t *testing.T) Datasource {
 	}
 
 	if e := d.Write("datasource.func", funcInstance); e != nil {
+		t.Fatalf("newMockDataSourceWithValues: Datasource.Write: %s", e)
+	}
+
+	// Try and integer value expressed as a float
+	if e := d.Write("datasource.int", 16.01); e != nil {
 		t.Fatalf("newMockDataSourceWithValues: Datasource.Write: %s", e)
 	}
 

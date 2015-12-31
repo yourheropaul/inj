@@ -1,9 +1,6 @@
 package inj
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func Test_TheDatasourceReaderWritesToTheDepdendency(t *testing.T) {
 
@@ -23,10 +20,10 @@ func Test_TheDatasourceReaderWritesToTheDepdendency(t *testing.T) {
 	}
 
 	if g, e := dep.StringValue, DEFAULT_STRING; g != e {
-		fmt.Println("Expected string %s, got %s", e, g)
+		t.Errorf("Expected string '%s', got '%s'", e, g)
 	}
 
 	if dep.FuncValue == nil {
-		fmt.Println("Didn't get expected function instance")
+		t.Errorf("Didn't get expected function instance")
 	}
 }

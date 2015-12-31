@@ -30,6 +30,7 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 
 	parents := []reflect.Value{}
 	v, err := g.findFieldValue(o, dep.Path, &parents)
+	vtype := v.Type()
 
 	if err != nil {
 		return err
@@ -55,8 +56,14 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 
 				typ := reflect.TypeOf(dsvalue)
 
-				if typ.AssignableTo(v.Type()) {
-					v.Set(reflect.ValueOf(dsvalue))
+				value := reflect.ValueOf(dsvalue)
+
+				if typ != vtype && typ.ConvertibleTo(vtype) {
+					value = value.Convert(vtype)
+				}
+
+				if value.Type().AssignableTo(vtype) {
+					v.Set(value)
 					return nil
 				}
 			}
@@ -83,6 +90,10 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 
 		if typ.AssignableTo(v.Type()) {
 			v.Set(node.Value)
+
+			// FIXME! If there's a datasource path and writers, write
+			// to the datasource and record any errors
+			// Do we need to name datasources?
 			return nil
 		}
 	}
