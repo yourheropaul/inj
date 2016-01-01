@@ -57,5 +57,5 @@ func Assert() (valid bool, errors []string) {
 
 // Add zero or more datasources to the global graph
 func AddDatasource(ds ...interface{}) error {
-	return graph.AddDatasource(ds)
+	return graph.AddDatasource(ds...)
 }
