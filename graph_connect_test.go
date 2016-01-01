@@ -108,12 +108,10 @@ func Test_ConnectAssignmentHappyPath(t *testing.T) {
 
 	gnds := []graphNodeDependency{
 		graphNodeDependency{
-			Name: "Child1",
 			Path: structPath(".Child1"),
 			Type: reflect.TypeOf(c1),
 		},
 		graphNodeDependency{
-			Name: "Child2",
 			Path: structPath(".Child2"),
 			Type: reflect.TypeOf(c2),
 		},
@@ -152,12 +150,10 @@ func Test_ConnectAssignmentNeutralPath(t *testing.T) {
 
 	gnds := []graphNodeDependency{
 		graphNodeDependency{
-			Name: "Child1",
 			Path: structPath(".Child1"),
 			Type: reflect.TypeOf(c1),
 		},
 		graphNodeDependency{
-			Name: "Child2",
 			Path: structPath(".Child2"),
 			Type: reflect.TypeOf(c2),
 		},
@@ -191,7 +187,6 @@ func Test_ConnectSadPath1(t *testing.T) {
 
 	gnds := []graphNodeDependency{
 		graphNodeDependency{
-			Name: "Child2",
 			Path: structPath(".child2"),
 			Type: reflect.TypeOf(c2),
 		},
@@ -216,12 +211,10 @@ func Test_ConnectSadPath2(t *testing.T) {
 
 	gnds := []graphNodeDependency{
 		graphNodeDependency{
-			Name: "Child1",
 			Path: structPath(".Child1"),
 			Type: reflect.TypeOf(c1),
 		},
 		graphNodeDependency{
-			Name: "Child2",
 			Path: structPath(".Child2"),
 			Type: reflect.TypeOf(c2),
 		},
