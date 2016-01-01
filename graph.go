@@ -10,6 +10,8 @@ type Graph struct {
 	UnmetDependencies int
 	Errors            []string
 	indexes           []reflect.Type
+	datasourceReaders []DatasourceReader
+	datasourceWriters []DatasourceWriter
 }
 
 // Create a new instance of a graph with allocated memory
@@ -19,6 +21,8 @@ func NewGraph(providers ...interface{}) (g *Graph) {
 
 	g.nodes = make(nodeMap)
 	g.Errors = make([]string, 0)
+	g.datasourceReaders = make([]DatasourceReader, 0)
+	g.datasourceWriters = make([]DatasourceWriter, 0)
 
 	g.Provide(providers...)
 

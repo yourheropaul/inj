@@ -6,9 +6,9 @@ import (
 )
 
 type graphNodeDependency struct {
-	Name string
-	Path structPath
-	Type reflect.Type
+	DatasourcePaths []string
+	Path            structPath
+	Type            reflect.Type
 }
 
 func findDependencies(t reflect.Type, deps *[]graphNodeDependency, path *structPath) error {
@@ -41,7 +41,7 @@ func findDependencies(t reflect.Type, deps *[]graphNodeDependency, path *structP
 		}
 
 		// Assemble everything we know about the dependency
-		dep := parseStructTag(tag, identifier(f.Type))
+		dep := parseStructTag(tag)
 
 		// Add the path in the struct
 		dep.Path = branch
@@ -56,14 +56,12 @@ func findDependencies(t reflect.Type, deps *[]graphNodeDependency, path *structP
 	return nil
 }
 
-func parseStructTag(t reflect.StructTag, defaultName string) (d graphNodeDependency) {
-
-	d.Name = defaultName
+func parseStructTag(t reflect.StructTag) (d graphNodeDependency) {
 
 	parts := strings.Split(t.Get("inj"), ",")
 
 	if len(parts) > 0 && len(parts[0]) > 0 {
-		d.Name = parts[0]
+		d.DatasourcePaths = parts
 	}
 
 	return
