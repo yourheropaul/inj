@@ -11,6 +11,7 @@ type Grapher interface {
 	Provide(inputs ...interface{}) error
 	Inject(fn interface{}, args ...interface{})
 	Assert() (valid bool, errors []string)
+	AddDatasource(...interface{}) error
 }
 
 //////////////////////////////////////////////
@@ -52,4 +53,9 @@ func Inject(fn interface{}, args ...interface{}) {
 // don't.
 func Assert() (valid bool, errors []string) {
 	return graph.Assert()
+}
+
+// Add zero or more datasources to the global graph
+func AddDatasource(ds ...interface{}) error {
+	return graph.AddDatasource(ds)
 }
