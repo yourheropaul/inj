@@ -63,7 +63,15 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 				}
 
 				if value.Type().AssignableTo(vtype) {
+
+					// The value can be set by reflection
 					v.Set(value)
+
+					// Any datasourcewriters need to be updated
+					for _, w := range g.datasourceWriters {
+						w.Write(path, v.Interface())
+					}
+
 					return nil
 				}
 			}
@@ -89,11 +97,17 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 		}
 
 		if typ.AssignableTo(v.Type()) {
+
+			// The value can be set by reflection
 			v.Set(node.Value)
 
-			// FIXME! If there's a datasource path and writers, write
-			// to the datasource and record any errors
-			// Do we need to name datasources?
+			// Any datasourcewriters need to be updated
+			for _, path := range dep.DatasourcePaths {
+				for _, w := range g.datasourceWriters {
+					w.Write(path, v.Interface())
+				}
+			}
+
 			return nil
 		}
 	}

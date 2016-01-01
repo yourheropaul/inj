@@ -5,6 +5,17 @@ import (
 	"testing"
 )
 
+func assertNoGraphErrors(t *testing.T, g *Graph) {
+
+	if len(g.Errors) != 0 {
+		t.Fatalf("Graph was initialised with errors > 0")
+	}
+
+	if g.UnmetDependencies != 0 {
+		t.Fatalf("Graph was initialised with UnmetDependencies > 0")
+	}
+}
+
 // New graphs should be different objects
 func Test_GraphInitialisation1(t *testing.T) {
 

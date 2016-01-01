@@ -1,6 +1,45 @@
 package inj
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
+
+///////////////////////////////////////////////////////////////
+// A mock DatasourceReader implementation
+///////////////////////////////////////////////////////////////
+
+type MockDatasourceReader struct {
+	stack map[string]interface{}
+}
+
+func NewMockDatasourceReader(data ...map[string]interface{}) *MockDatasourceReader {
+
+	d := &MockDatasourceReader{}
+
+	d.stack = make(map[string]interface{})
+
+	for _, datum := range data {
+		for k, v := range datum {
+			d.stack[k] = v
+		}
+	}
+
+	return d
+}
+
+func (d *MockDatasourceReader) Read(key string) (interface{}, error) {
+
+	if value, exists := d.stack[key]; exists {
+		return value, nil
+	}
+
+	return nil, fmt.Errorf("No stack entry for '%s'", key)
+}
+
+///////////////////////////////////////////////////////////////
+// Unit tests for graph implementation
+///////////////////////////////////////////////////////////////
 
 func Test_TheDatasourceReaderWritesToTheDepdendency(t *testing.T) {
 
@@ -11,13 +50,7 @@ func Test_TheDatasourceReaderWritesToTheDepdendency(t *testing.T) {
 	g.AddDatasource(ds)
 	g.Provide(&dep)
 
-	if len(g.Errors) != 0 {
-		t.Errorf("Graph was initialised with errors > 0")
-	}
-
-	if g.UnmetDependencies != 0 {
-		t.Errorf("Graph was initialised with UnmetDependencies > 0")
-	}
+	assertNoGraphErrors(t, g)
 
 	if g, e := dep.StringValue, DEFAULT_STRING; g != e {
 		t.Errorf("Expected string '%s', got '%s'", e, g)
