@@ -64,22 +64,27 @@ func Test_FindDependenciesInEmbeddedStructs(t *testing.T) {
 func Test_ParseStructTag(t *testing.T) {
 
 	inps := []struct {
-		tag         reflect.StructTag
-		defaultName string
-		name        string
+		tag            reflect.StructTag
+		expectedValues []string
 	}{
 		{
-			tag:         "inj:\"\" someothertag:\"\"",
-			defaultName: "default",
-			name:        "default",
+			tag: "inj:\"\" someothertag:\"\"",
+		},
+		{
+			tag:            "inj:\"some.datasource.path\"",
+			expectedValues: []string{"some.datasource.path"},
+		},
+		{
+			tag:            "inj:\"one,two\"",
+			expectedValues: []string{"one", "two"},
 		},
 	}
 
 	for _, inp := range inps {
-		d := parseStructTag(inp.tag, inp.defaultName)
+		d := parseStructTag(inp.tag)
 
-		if g, e := d.Name, inp.name; g != e {
-			t.Errorf("%s: got name %s, expected %s", g, e)
+		if !reflect.DeepEqual(inp.expectedValues, d.DatasourcePaths) {
+			t.Errorf("inp.expectedValues != d.DatasourcePaths")
 		}
 	}
 }

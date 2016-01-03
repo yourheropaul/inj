@@ -30,6 +30,7 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 
 	parents := []reflect.Value{}
 	v, err := g.findFieldValue(o, dep.Path, &parents)
+	vtype := v.Type()
 
 	if err != nil {
 		return err
@@ -43,6 +44,38 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 	// Sanity check
 	if !v.CanSet() {
 		return fmt.Errorf("%s%s can't be set", o, dep.Path)
+	}
+
+	// If there are any datasource paths supplied...
+	for _, path := range dep.DatasourcePaths {
+
+		// ...check to see if a datasource reader has the value
+		for _, d := range g.datasourceReaders {
+
+			if dsvalue, err := d.Read(path); err == nil {
+
+				typ := reflect.TypeOf(dsvalue)
+
+				value := reflect.ValueOf(dsvalue)
+
+				if typ != vtype && typ.ConvertibleTo(vtype) {
+					value = value.Convert(vtype)
+				}
+
+				if value.Type().AssignableTo(vtype) {
+
+					// The value can be set by reflection
+					v.Set(value)
+
+					// Any datasourcewriters need to be updated
+					for _, w := range g.datasourceWriters {
+						w.Write(path, v.Interface())
+					}
+
+					return nil
+				}
+			}
+		}
 	}
 
 	// Run through the graph and see if anything is settable
@@ -64,7 +97,17 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 		}
 
 		if typ.AssignableTo(v.Type()) {
+
+			// The value can be set by reflection
 			v.Set(node.Value)
+
+			// Any datasourcewriters need to be updated
+			for _, path := range dep.DatasourcePaths {
+				for _, w := range g.datasourceWriters {
+					w.Write(path, v.Interface())
+				}
+			}
+
 			return nil
 		}
 	}
