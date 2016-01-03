@@ -6,7 +6,7 @@ import (
 )
 
 // Given a function, call it with arguments from the graph.
-// Throws a runtime erro,r in the form of a panic, on failure.
+// Throws a runtime error in the form of a panic on failure.
 func (g *Graph) Inject(fn interface{}, args ...interface{}) {
 
 	// Reflect the input
