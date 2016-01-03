@@ -47,7 +47,7 @@ Obviously this example is trivial in the extreme, and you'd probably never use t
  
 You mean you want to read from a JSON or TOML config file, and inject the values into Go objects directly? Maybe you'd like to pull values from a DynamoDB instance and insert them into Go struct instances with almost zero code overhead?
 
-That's what's `inj` is designed for! And what's more, intrepid programmer Adrian Duke has already done the leg work for you in his fantastic [configr](https://github.com/adrianduke/configr) package – see his readme for brief instructions.
+That's what's `inj` is designed for! And what's more, intrepid programmer [Adrian Duke](http://adeduke.com/) has already done the leg work for you in his fantastic [configr](https://github.com/adrianduke/configr) package – see his readme for brief instructions.
 
 ### I want absolutely, positively no globals in my application. None. Can I do that with this package?
 
