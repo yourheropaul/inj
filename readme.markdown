@@ -40,7 +40,7 @@ func main() {
 	fmt.Printf("%s:%d", config.Host, config.Port)
 }
 ```
-There's a full explanation for this basic example in the [Godoc](http://localhost:6061/pkg/github.com/yourheropaul/inj/#Overview). 
+There's a full explanation for this basic example in the [Godoc](https://godoc.org/github.com/yourheropaul/inj). 
 Obviously this example is trivial in the extreme, and you'd probably never use the the package in that way. The easiest way to understand
  `inj` for real-world applications is to refer to the [example application](https://github.com/yourheropaul/inj/tree/master/example) in this repository. The API is small, and everything in the core API is demonstrated there. 
 ### Dependency injection is great and everything, but I really want to be able to pull data directly from external services, not just the object graph. 
@@ -67,5 +67,5 @@ Finally, `inj.Provide()` is fairly slow, but it's designed to executed at runtim
 
 ### But how do I use it?
 
-Seriously? I just explained that a minute ago. Maybe look at the [example application](https://github.com/yourheropaul/inj/tree/master/example) or the [Godoc](http://localhost:6061/pkg/github.com/yourheropaul/inj/#Overview).
+Seriously? I just explained that a minute ago. Maybe look at the [example application](https://github.com/yourheropaul/inj/tree/master/example) or the [Godoc](https://godoc.org/github.com/yourheropaul/inj).
 
