@@ -3,7 +3,7 @@
 
 Are you troubled by dependency configuration issues in the middle of the night? Do you experience feelings of dread at the code boundaries of your application or during functional testing? Have you or your team ever used a global variable, exported package-level object or a build constraint hack? If the answer is *yes*, then don't wait another minute. Pick up your terminal and `go get github.com/yourheropaul/inj` today.
 
-Come on and inject yourself before you wreck yourself.
+Inject yourself before you wreck yourself.
 
 ### What *is* this thing?
 
@@ -15,7 +15,39 @@ Come on and inject yourself before you wreck yourself.
 
 ### How do I use it?
 
-Check out the [example application](https://github.com/yourheropaul/inj/tree/master/example) in this repository. The API is small, and everything is demonstrated there. Technical documentation is also available on [godoc.org](https://godoc.org/github.com/yourheropaul/inj).
+A simple and unrealistically trivial example is this:
+
+```
+package main
+
+import (
+	"fmt"
+
+	"github.com/yourheropaul/inj"
+)
+
+type ServerConfig struct {
+	Port int    `inj:""`
+	Host string `inj:""`
+}
+
+func main() {
+	config := ServerConfig{}
+	inj.Provide(&config, 6060, "localhost")
+
+	// The struct fields have now been set by the graph, and
+	// this will print "localhost:6060"
+	fmt.Printf("%s:%d", config.Host, config.Port)
+}
+```
+There's a full explanation for this basic example in the [Godoc](http://localhost:6061/pkg/github.com/yourheropaul/inj/#Overview). 
+Obviously this example is trivial in the extreme, and you'd probably never use the the package in that way. The easiest way to understand
+ `inj` for real-world applications is to refer to the [example application](https://github.com/yourheropaul/inj/tree/master/example) in this repository. The API is small, and everything in the core API is demonstrated there. 
+### Dependency injection is great and everything, but I really want to be able to pull data directly from external services, not just the object graph. 
+ 
+You mean you want to read from a JSON or TOML config file, and inject the values into Go objects directly? Maybe you'd like to pull values from a DynamoDB instance and insert them into Go struct instances with almost zero code overhead?
+
+That's what's `inj` is designed for! And what's more, intrepid programmer Adrian Duke has already done the leg work for you in his fantastic [configr](https://github.com/adrianduke/configr) package – see his readme for brief instructions.
 
 ### I want absolutely, positively no globals in my application. None. Can I do that with this package?
 
@@ -35,4 +67,5 @@ Finally, `inj.Provide()` is fairly slow, but it's designed to executed at runtim
 
 ### But how do I use it?
 
-Seriously? I just explained that a minute ago.
+Seriously? I just explained that a minute ago. Maybe look at the [example application](https://github.com/yourheropaul/inj/tree/master/example) or the [Godoc](http://localhost:6061/pkg/github.com/yourheropaul/inj/#Overview).
+

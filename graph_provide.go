@@ -2,6 +2,12 @@ package inj
 
 import "reflect"
 
+// Insert zero or more objected into the graph, and then attempt to wire up any unmet
+// dependencies in the graph.
+//
+// As explained in the main documentation (https://godoc.org/github.com/yourheropaul/inj),
+// a graph consists of what is essentially a map of types to values. If the same type is
+// provided twice with different values, the *last* value will be stored in the graph.
 func (g *Graph) Provide(inputs ...interface{}) error {
 
 	for _, input := range inputs {
