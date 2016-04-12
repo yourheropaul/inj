@@ -135,8 +135,7 @@ func Test_ConnectAssignmentHappyPath(t *testing.T) {
 	}
 }
 
-// Values should not be assigned to nodes which already
-// have values
+// Nodes should update when the values do
 func Test_ConnectAssignmentNeutralPath(t *testing.T) {
 
 	g, p := NewGraph(), &validConnectTester{}
@@ -169,12 +168,12 @@ func Test_ConnectAssignmentNeutralPath(t *testing.T) {
 		}
 	}
 
-	if p.Child1 != c1 {
-		t.Errorf("Child1 isn't the original c1")
+	if p.Child1 == c1 {
+		t.Errorf("Child1 is the original c1")
 	}
 
-	if p.Child2 != c2 {
-		t.Errorf("Child1 isn't the original c1")
+	if p.Child2 == c2 {
+		t.Errorf("Child1 is the original c1")
 	}
 }
 

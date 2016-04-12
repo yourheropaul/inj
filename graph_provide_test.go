@@ -102,7 +102,7 @@ func Test_ProvideOverride1(t *testing.T) {
 		t.Fatalf("Graph.Provide: %s", err)
 	}
 
-	if g, e := c.String, DEFAULT_STRING; g != e {
+	if g, e := c.String, DEFAULT_STRING; g == e {
 		t.Errorf("Got %s, expected %s", g, e)
 	}
 
