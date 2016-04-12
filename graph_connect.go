@@ -36,11 +36,6 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 		return err
 	}
 
-	// If value has already been set, then skip it
-	if !zero(v) {
-		return nil
-	}
-
 	// Sanity check
 	if !v.CanSet() {
 		return fmt.Errorf("%s%s can't be set", o, dep.Path)
