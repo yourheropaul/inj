@@ -8,7 +8,7 @@ import "testing"
 
 func Test_ADatasourceCanBeAddedToAGraph(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 	d := NewMockDatasource()
 
 	if e := g.AddDatasource(d); e != nil {
@@ -26,7 +26,7 @@ func Test_ADatasourceCanBeAddedToAGraph(t *testing.T) {
 
 func Test_SomeNonDatasourceTypeCantBeAddedToGraph(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 	d := struct{}{}
 
 	if e := g.AddDatasource(d); e == nil {

@@ -5,32 +5,32 @@ import "reflect"
 // A Graph object represents an flat tree of application
 // dependencies, a count of currently unmet dependencies,
 // and a list of encountered errors.
-type Graph struct {
+type graph struct {
 	nodes             nodeMap
-	UnmetDependencies int
-	Errors            []string
+	unmetDependency   int
+	errors            []string
 	indexes           []reflect.Type
 	datasourceReaders []DatasourceReader
 	datasourceWriters []DatasourceWriter
 }
 
 // Create a new instance of a graph with allocated memory
-func NewGraph(providers ...interface{}) (g *Graph) {
+func NewGraph(providers ...interface{}) Grapher {
 
-	g = &Graph{}
+	g := &graph{}
 
 	g.nodes = make(nodeMap)
-	g.Errors = make([]string, 0)
+	g.errors = make([]string, 0)
 	g.datasourceReaders = make([]DatasourceReader, 0)
 	g.datasourceWriters = make([]DatasourceWriter, 0)
 
 	g.Provide(providers...)
 
-	return
+	return g
 }
 
 // Add a node by reflection type
-func (g *Graph) add(typ reflect.Type) (n *graphNode) {
+func (g *graph) add(typ reflect.Type) (n *graphNode) {
 
 	n = newGraphNode()
 	g.nodes[typ] = n

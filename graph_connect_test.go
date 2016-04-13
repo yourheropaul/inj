@@ -39,7 +39,7 @@ func newChildren() (*connectTesterChild1, *connectTesterChild2) {
 // Connected objects should be in the graph
 func Test_ConnectHappyPath(t *testing.T) {
 
-	g, p := NewGraph(), validConnectTester{}
+	g, p := newGraph(), validConnectTester{}
 	c1, c2 := newChildren()
 
 	g.Provide(&p, c1, c2)
@@ -84,17 +84,17 @@ func Test_ConnectHappyPath(t *testing.T) {
 // errors stored
 func Test_ConnectDepCount(t *testing.T) {
 
-	g, p := NewGraph(), validConnectTester{}
+	g, p := newGraph(), validConnectTester{}
 
 	g.Provide(&p)
 
 	g.connect()
 
-	if g, e := g.UnmetDependencies, 2; g != e {
+	if g, e := g.unmetDependency, 2; g != e {
 		t.Errorf("Got %d unmet deps, expected %d", g, e)
 	}
 
-	if g, e := len(g.Errors), 2; g != e {
+	if g, e := len(g.errors), 2; g != e {
 		t.Errorf("Got %d unmet dep errors, expected %d", g, e)
 	}
 }
@@ -102,7 +102,7 @@ func Test_ConnectDepCount(t *testing.T) {
 // Values should actually be assigned
 func Test_ConnectAssignmentHappyPath(t *testing.T) {
 
-	g, p := NewGraph(), &validConnectTester{}
+	g, p := newGraph(), &validConnectTester{}
 	c1, c2 := newChildren()
 	v := reflect.ValueOf(p)
 
@@ -138,7 +138,7 @@ func Test_ConnectAssignmentHappyPath(t *testing.T) {
 // Nodes should update when the values do
 func Test_ConnectAssignmentNeutralPath(t *testing.T) {
 
-	g, p := NewGraph(), &validConnectTester{}
+	g, p := newGraph(), &validConnectTester{}
 	c1, c2 := newChildren()
 	c3, c4 := newChildren()
 	v := reflect.ValueOf(p)
@@ -180,7 +180,7 @@ func Test_ConnectAssignmentNeutralPath(t *testing.T) {
 // Internal variabled should cause the assignment to fail
 func Test_ConnectSadPath1(t *testing.T) {
 
-	g, p := NewGraph(), &invalidConnectTester{}
+	g, p := newGraph(), &invalidConnectTester{}
 	c1, c2 := newChildren()
 	v := reflect.ValueOf(p)
 
@@ -204,7 +204,7 @@ func Test_ConnectSadPath1(t *testing.T) {
 // Unmet dependencies should cause an error
 func Test_ConnectSadPath2(t *testing.T) {
 
-	g, p := NewGraph(), &validConnectTester{}
+	g, p := newGraph(), &validConnectTester{}
 	c1, c2 := newChildren()
 	v := reflect.ValueOf(p)
 
@@ -230,7 +230,7 @@ func Test_ConnectSadPath2(t *testing.T) {
 // Should find a reflect value for a path
 func Test_ConnectFindFieldValue(t *testing.T) {
 
-	g, p := NewGraph(), &validConnectTester{}
+	g, p := newGraph(), &validConnectTester{}
 	v := reflect.ValueOf(p)
 
 	var descs = []struct {
@@ -264,7 +264,7 @@ func Test_ConnectFindFieldValue(t *testing.T) {
 // a struct
 func Test_ConnectF(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 
 	_, e := g.findFieldValue(reflect.ValueOf("123"), ".Child1", &[]reflect.Value{})
 
@@ -276,7 +276,7 @@ func Test_ConnectF(t *testing.T) {
 // Incorrect paths should cause an error to be returned
 func Test_ConnectG(t *testing.T) {
 
-	g, p := NewGraph(), &validConnectTester{}
+	g, p := newGraph(), &validConnectTester{}
 
 	_, e := g.findFieldValue(reflect.ValueOf(p), ".This.Doesnt.Exist", &[]reflect.Value{})
 

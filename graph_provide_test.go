@@ -9,7 +9,7 @@ import "testing"
 // Objects passed to a graph should appear in the graph and be populated
 func Test_ProvideHappyPath1(t *testing.T) {
 
-	g, c := NewGraph(), ConcreteType{}
+	g, c := newGraph(), ConcreteType{}
 
 	// Register providers (can include non-providers, which will then be wired up)
 	if err := g.Provide(
@@ -40,7 +40,7 @@ func Test_ProvideHappyPath1(t *testing.T) {
 // Multiple calls to Provide should have the same effect as a single call
 func Test_ProvideHappyPath2(t *testing.T) {
 
-	g, c := NewGraph(), ConcreteType{}
+	g, c := newGraph(), ConcreteType{}
 
 	vs := []interface{}{
 		&c,
@@ -75,7 +75,7 @@ func Test_ProvideHappyPath2(t *testing.T) {
 // New dependency provisions shouldn't overwrite previously set ones
 func Test_ProvideOverride1(t *testing.T) {
 
-	g, c := NewGraph(), ConcreteType{}
+	g, c := newGraph(), ConcreteType{}
 
 	if err := g.Provide(
 		&c,
@@ -115,7 +115,7 @@ func Test_ProvideOverride1(t *testing.T) {
 // Embedded structs should be parsed like any other
 func Test_EmbeddedStructProvision(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 
 	e, he := Embeddable{X: 10}, &HasEmbeddable{}
 
@@ -135,7 +135,7 @@ func Test_EmbeddedStructProvision(t *testing.T) {
 // Self-referential dependencies shouldn't be assigned
 func Test_SelfReferencingDoesntHappen(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 
 	o := Ouroboros1{}
 
@@ -156,7 +156,7 @@ func Test_SelfReferencingDoesntHappen(t *testing.T) {
 // Self-referential dependencies shouldn't impede proper injection
 func Test_SelfReferencingShouldntCircumentInjection(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 
 	o1 := Ouroboros1{V: 1}
 	o2 := Ouroboros2{V: 2}
@@ -190,7 +190,7 @@ func Test_SelfReferencingShouldntCircumentInjection(t *testing.T) {
 // Self-referential prevention must extend to embedding
 func Test_EmbeddedSelfReferencingDoesntHappen(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 
 	o := Ouroboros4{}
 
@@ -211,7 +211,7 @@ func Test_EmbeddedSelfReferencingDoesntHappen(t *testing.T) {
 // Self-referential dependencies shouldn't impede proper injection
 func Test_EmbeddedSelfReferencingShouldntCircumentInjection(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 
 	o1 := Ouroboros3{V: 1}
 	o2 := Ouroboros4{V: 2}

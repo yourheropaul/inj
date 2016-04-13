@@ -5,13 +5,17 @@ import (
 	"testing"
 )
 
-func assertNoGraphErrors(t *testing.T, g *Graph) {
+func newGraph() *graph {
+	return NewGraph().(*graph)
+}
 
-	if len(g.Errors) != 0 {
+func assertNoGraphErrors(t *testing.T, g *graph) {
+
+	if len(g.errors) != 0 {
 		t.Fatalf("Graph was initialised with errors > 0")
 	}
 
-	if g.UnmetDependencies != 0 {
+	if g.unmetDependency != 0 {
 		t.Fatalf("Graph was initialised with UnmetDependencies > 0")
 	}
 }
@@ -29,13 +33,13 @@ func Test_GraphInitialisation1(t *testing.T) {
 // Initial graph state should be zero values
 func Test_GraphInitialisation2(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 
-	if len(g.Errors) != 0 {
+	if len(g.errors) != 0 {
 		t.Errorf("Graph was initialised with errors > 0")
 	}
 
-	if g.UnmetDependencies != 0 {
+	if g.unmetDependency != 0 {
 		t.Errorf("Graph was initialised with UnmetDependencies > 0")
 	}
 }
@@ -43,7 +47,7 @@ func Test_GraphInitialisation2(t *testing.T) {
 // Added nodes should be in the graph object
 func Test_GraphNodeAddition(t *testing.T) {
 
-	g := NewGraph()
+	g := newGraph()
 	typ := reflect.TypeOf(0)
 
 	if len(g.nodes) != 0 {

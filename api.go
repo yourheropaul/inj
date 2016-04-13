@@ -19,16 +19,16 @@ type Grapher interface {
 //////////////////////////////////////////////
 
 // A default grapher to use in the public API
-var graph Grapher = NewGraph()
+var globalGraph Grapher = NewGraph()
 
 // Fetch the current grapher instance (in other words, get the global graph)
 func GetGrapher() Grapher {
-	return graph
+	return globalGraph
 }
 
 // Set a specific grapher instance, which will replace the global graph.
 func SetGrapher(g Grapher) {
-	graph = g
+	globalGraph = g
 }
 
 //////////////////////////////////////////////
@@ -42,7 +42,7 @@ func SetGrapher(g Grapher) {
 // a graph consists of what is essentially a map of types to values. If the same type is
 // provided twice with different values, the *last* value will be stored in the graph.
 func Provide(inputs ...interface{}) error {
-	return graph.Provide(inputs...)
+	return globalGraph.Provide(inputs...)
 }
 
 // Given a function, call it with arguments assigned
@@ -53,7 +53,7 @@ func Provide(inputs ...interface{}) error {
 // or if the provided function accepts variadic arguments (because
 // that's not currently supported in the scope of inj).
 func Inject(fn interface{}, args ...interface{}) {
-	graph.Inject(fn, args...)
+	globalGraph.Inject(fn, args...)
 }
 
 // Make sure that all provided dependencies have their
@@ -61,7 +61,7 @@ func Inject(fn interface{}, args ...interface{}) {
 // haven't. A graph is never really finalised, so Provide() and
 // Assert() can be called any number of times.
 func Assert() (valid bool, errors []string) {
-	return graph.Assert()
+	return globalGraph.Assert()
 }
 
 // Add any number of Datasources, DatasourceReaders or DatasourceWriters
@@ -73,5 +73,5 @@ func Assert() (valid bool, errors []string) {
 // can only be met by an external datasource will be wired up automatically.
 //
 func AddDatasource(ds ...interface{}) error {
-	return graph.AddDatasource(ds...)
+	return globalGraph.AddDatasource(ds...)
 }

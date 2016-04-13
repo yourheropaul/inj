@@ -76,7 +76,7 @@ func Test_DatasourceReaderWriterLoopInGraph(t *testing.T) {
 	g.AddDatasource(reader, writer)
 	g.Provide(&dep)
 
-	assertNoGraphErrors(t, g)
+	assertNoGraphErrors(t, g.(*graph))
 
 	writer.AssertMap(t, expected_values)
 }
@@ -99,7 +99,7 @@ func Test_DatasourceWriterWritesWithoutAReader(t *testing.T) {
 		&dep,
 	)
 
-	assertNoGraphErrors(t, g)
+	assertNoGraphErrors(t, g.(*graph))
 
 	writer.AssertMap(t, expected_values)
 }

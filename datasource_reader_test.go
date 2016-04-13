@@ -50,7 +50,7 @@ func Test_TheDatasourceReaderWritesToTheDepdendency(t *testing.T) {
 	g.AddDatasource(ds)
 	g.Provide(&dep)
 
-	assertNoGraphErrors(t, g)
+	assertNoGraphErrors(t, g.(*graph))
 
 	if g, e := dep.StringValue, DEFAULT_STRING; g != e {
 		t.Errorf("Expected string '%s', got '%s'", e, g)

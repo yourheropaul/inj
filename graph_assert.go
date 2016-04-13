@@ -4,13 +4,13 @@ package inj
 // requirements met, and return a list of errors if they
 // haven't. A graph is never really finalised, so Provide() and
 // Assert() can be called any number of times.
-func (g *Graph) Assert() (valid bool, errors []string) {
+func (g *graph) Assert() (valid bool, errors []string) {
 
 	valid = true
 
-	if g.UnmetDependencies > 0 || len(g.Errors) > 0 {
+	if g.unmetDependency > 0 || len(g.errors) > 0 {
 		valid = false
 	}
 
-	return valid, g.Errors
+	return valid, g.errors
 }

@@ -7,11 +7,11 @@ import (
 
 // Usually called after Provide() to assign the values
 // of all requested dependencies.
-func (g *Graph) connect() {
+func (g *graph) connect() {
 
 	// Reset error counts
-	g.UnmetDependencies = 0
-	g.Errors = make([]string, 0)
+	g.unmetDependency = 0
+	g.errors = make([]string, 0)
 
 	// loop through all nodes
 	for _, node := range g.nodes {
@@ -19,14 +19,14 @@ func (g *Graph) connect() {
 		// assign dependencies to the object
 		for _, dep := range node.Dependencies {
 			if e := g.assignValueToNode(node.Value, dep); e != nil {
-				g.UnmetDependencies++
-				g.Errors = append(g.Errors, e.Error())
+				g.unmetDependency++
+				g.errors = append(g.errors, e.Error())
 			}
 		}
 	}
 }
 
-func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) error {
+func (g *graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) error {
 
 	parents := []reflect.Value{}
 	v, err := g.findFieldValue(o, dep.Path, &parents)
@@ -111,7 +111,7 @@ func (g *Graph) assignValueToNode(o reflect.Value, dep graphNodeDependency) erro
 }
 
 // Required a struct type
-func (g *Graph) findFieldValue(parent reflect.Value, path structPath, linneage *[]reflect.Value) (reflect.Value, error) {
+func (g *graph) findFieldValue(parent reflect.Value, path structPath, linneage *[]reflect.Value) (reflect.Value, error) {
 
 	*linneage = append(*linneage, parent)
 

@@ -10,7 +10,7 @@ import "fmt"
 // will automatically re-Provide itself, so that any depdendencies that
 // can only be met by an external datasource will be wired up automatically.
 //
-func (g *Graph) AddDatasource(ds ...interface{}) error {
+func (g *graph) AddDatasource(ds ...interface{}) error {
 
 	for i, d := range ds {
 		found := false
