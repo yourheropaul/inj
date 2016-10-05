@@ -7,9 +7,9 @@ Inject yourself before you wreck yourself.
 
 ### What *is* this thing?
 
-`inj` provides reflection-based dependency injection for Go structs and functions. Some parts of it will be familiar to anyone who's ever used [facebookgo/inject](https://github.com/facebookgo/inject); others bear a passing similarity to [depdendency injection in Angular.js](https://docs.angularjs.org/guide/di).  It's designed for medium to large applications, but it works just fine for small apps too. It's especially useful if your project is is BDD/TDD-orientated.
+`inj` provides reflection-based dependency injection for Go structs and functions. Some parts of it will be familiar to anyone who's ever used [facebookgo/inject](https://github.com/facebookgo/inject); others bear a passing similarity to [dependency injection in Angular.js](https://docs.angularjs.org/guide/di).  It's designed for medium to large applications, but it works just fine for small apps too. It's especially useful if your project is is BDD/TDD-orientated.
 
-### Depdendency injection is boring and hard to maintain. I want something that works out of the box.
+### Dependency injection is boring and hard to maintain. I want something that works out of the box.
 
 `inj` may well be for you. A good, idiomatic Go package is a simple, clearly laid out, well-tested Go package – and `inj` is, or aspires to be, all of those things. It works well and it works intuitively. There's only one, optional configuration option (whether or not to use a global variable inside the package) and there's very little to think about once you're set up.
 
@@ -57,7 +57,7 @@ Of course, and it couldn't be easier! Just compile your application with the tag
 
 I appreciate your skepticism, so let's gather some data. There are two things you need to be aware of when using `inj`.
 
-The first is that the application graph is one dimensional and indexed by type. That means you can't call `inj.Provide(someIntValue,someOtherIntValue)` and expect both integers to be in the graph – the second will override the first. Other depdendency injection approaches allow for named  and private depdendencies, but that has been sacrified here so that `inj.Inject()` could exist in a consistent way. When there's a choice, `inj` errs on the side of simplicity, consistency and idiomatic implementation over complexity and magic.
+The first is that the application graph is one dimensional and indexed by type. That means you can't call `inj.Provide(someIntValue,someOtherIntValue)` and expect both integers to be in the graph – the second will override the first. Other dependency injection approaches allow for named  and private depdendencies, but that has been sacrified here so that `inj.Inject()` could exist in a consistent way. When there's a choice, `inj` errs on the side of simplicity, consistency and idiomatic implementation over complexity and magic.
 
 The second consideration is execution speed. Obviously, calling `inj.Inject(fn)` is slower than calling `fn()` directly. In Go 1.4, with a medium-sized graph, it takes about 350 times longer to execute the call; in Go 1.5 rc1, it's about 240 times. If those numbers seem high, it's because they are. The impact on an application is measurable, but for most purposes negligible. 
 
@@ -68,4 +68,3 @@ Finally, `inj.Provide()` is fairly slow, but it's designed to executed at runtim
 ### But how do I use it?
 
 Seriously? I just explained that a minute ago. Maybe look at the [example application](https://github.com/yourheropaul/inj/tree/master/example) or the [Godoc](https://godoc.org/github.com/yourheropaul/inj).
-
